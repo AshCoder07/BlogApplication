@@ -5,15 +5,21 @@
     <%- include("./partials/nav.ejs") %>
     <div class="blogs content">
         <h2>All blogs</h2>
-        <% if(blogs.length>0){ %>
-            <% blogs.forEach(blog=>{ %>
+        
+        <!-- Add search form
+        <form action="/search" method="GET" class="search-form">
+            <input type="text" name="tag" placeholder="Search by tag">
+            <button type="submit">Search</button>
+        </form> -->
+        
+        <% if(blogs.length > 0) { %>
+            <% blogs.forEach(blog => { %>
                 <a class="single" href="/blogs/<%= blog._id %>">
                     <h3 class="title"><%= blog.title %></h3>
                     <p class="snippet"><%= blog.snippet %></p>
-                    <!-- <p class="snippet"><%= blog.body %></p> -->
-            </a>
-            <hr>
-            <% }) %>
+                </a>
+                <hr>
+            <% }); %>
         <% } else { %>
             <p>No blogs to display</p>
         <% } %>

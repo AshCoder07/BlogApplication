@@ -44,16 +44,16 @@ app.get("/blogs",(req,res)=>{
     })
 })
 
-app.post("/blogs",(req,res)=>{
-    const blog=new Blog(req.body)
-    blog.save()
-    .then((result)=>{
-        res.redirect("/blogs")
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
-})
+// app.post("/blogs",(req,res)=>{
+//     const blog=new Blog(req.body)
+//     blog.save()
+//     .then((result)=>{
+//         res.redirect("/blogs")
+//     })
+//     .catch((err)=>{
+//         console.log(err);
+//     })
+// })
 
 app.get("/blogs/:id",(req,res)=>{
     const id=req.params.id
@@ -65,6 +65,44 @@ app.get("/blogs/:id",(req,res)=>{
         console.log(err)
     })
 })
+
+app.post("/blogs", (req, res) => {
+    const { title, snippet, body, tags } = req.body;
+    const tagArray = tags.split(',').map(tag => tag.trim()); // Convert comma-separated tags to an array
+
+    const blog = new Blog({
+        title,
+        snippet,
+        body,
+        tags: tagArray // Assign tags to the blog object
+    });
+
+    blog.save()
+        .then((result) => {
+            res.redirect("/blogs");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+app.get("/search", async (req, res) => {
+    const tag = req.query.tag;
+
+    try {
+        let blogs = [];
+        if (tag) {
+            // Query MongoDB to find blogs with the specified tag
+            blogs = await Blog.find({ tags: tag }).sort({ createdAt: -1 });
+        } else {
+            // If no tag is specified, return all blogs sorted by creation date
+            blogs = await Blog.find().sort({ createdAt: -1 });
+        }
+        res.render("index.ejs", { title: "Search Results", blogs });
+    } catch (error) {
+        console.error("Error searching blogs:", error);
+        res.status(500).send("Error searching blogs. Please try again later.");
+    }
+});
 
 app.delete("/blogs/:id",(req,res)=>{
     const id=req.params.id

@@ -6,12 +6,13 @@
     <!-- Add search form -->
     
     <ul>
-        <li><form action="/search" method="GET" class="search-form">
-            <input type="text" name="tag" placeholder="Search by tag">
-            <button type="submit">Search</button>
-        </form></li>
+        
         <li><a href="/">Blogs</a></li>
         <li><a href="/about">About</a></li>
         <li><a href="/blogs/create">New Blog</a></li>
+        <form action="/search" method="GET" class="search-form">
+            <input type="text" name="tag" placeholder="Search by tag">
+            <button type="submit" class="submit-btn">🔍</button>
+        </form>
     </ul>
 </nav>

@@ -5,9 +5,6 @@ const Blog=require("./models/blog")
 
 const app=express();
 
-
-
-
 app.set("view engine","ejs")
 
 const dbURI="mongodb+srv://aswin07:aswin123@blogapplication.1ntohea.mongodb.net/blog-app?retryWrites=true&w=majority&appName=BlogApplication"
@@ -114,7 +111,6 @@ app.delete("/blogs/:id",(req,res)=>{
         console.log(err)
     })
 })
-
 
 
 app.use((req,res)=>{
